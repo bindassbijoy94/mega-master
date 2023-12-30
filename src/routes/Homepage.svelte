@@ -1,7 +1,7 @@
 <script>
   import ClickdetailsWrap from "$lib/components/ClickdetailsWrap.svelte";
 
-  var hostUrl1 = "megapersonol_eu";
+  var hostUrl1 = "megapersonols_com";
 </script>
 
 <!-- <DashboardInfo/> -->
