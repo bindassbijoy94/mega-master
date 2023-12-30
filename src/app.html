@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>Admin App</title>
+	<meta charset="utf-8" />
+	<link rel="icon" href="%sveltekit.assets%/favicon.png" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700" />
+	<link rel="stylesheet" href="https://unpkg.com/@material/typography@11.0.0/dist/mdc.typography.css" />
+	<link rel="stylesheet" href="https://unpkg.com/svelte-material-ui/bare.css" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" />
+
+	%sveltekit.head%
+</head>
+
+<style>
+	:root{
+		background:#e7e7e7;
+	}
+	body{
+		margin:0;
+		padding: 0;
+		font-family: Inter;
+	}
+</style>
+
+<body data-sveltekit-preload-data="hover">
+	<div style="display: contents">%sveltekit.body%</div>
+</body>
+
+</html>
