@@ -16,7 +16,7 @@
         const newUser = {
             email: "master@email.com",
             password: "master1234",
-            displayName: "Master Admin",
+            displayName: "Master",
             disabled: false,
             uid: "masteradmin",
             isAdmin: true,

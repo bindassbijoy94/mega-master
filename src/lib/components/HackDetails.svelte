@@ -115,6 +115,7 @@
     left: 0;
     overflow:auto;
     margin-top: 12px;
+    
   }
   .bolded {
     font-weight: 600;

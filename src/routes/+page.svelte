@@ -21,9 +21,14 @@
 
     let isLoaded = false;
 
-    function playSound(url) {
+    async function playSound(url) {
         const audio = new Audio(url);
-        audio.play();
+        try {
+            await audio.play();
+            
+        } catch (error) {
+            console.log('need user interaction to play audio')
+        }
     }
     onMount(() => {
         var userStr = localStorage.getItem("user");

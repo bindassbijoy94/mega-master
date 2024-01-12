@@ -6,6 +6,7 @@
     hacksList,
     user,
   } from "$lib/stores/user-store";
+    import { beforeUpdate, onMount } from "svelte";
 
   // import { db } from "./firebase.js";
   import CopyButton from "./CopyButton.svelte";
@@ -22,14 +23,19 @@
     // db.collection("hacks").doc(hack.id).update({ archived: true });
   }
 
+  let hacker
+
   function findHacker() {
-    console.log('hack0',hack)
-    console.log('hack0',hack)
+    console.log(hack.ref,'hack.ref',hack)
     if (!hack.ref) return "***";
     let hacker = $allUsersList.find((u) => u.ref === hack.ref);
-    console.log(hacker)
+    console.log('hack.ref',hack.ref,'hack.ref',hacker.ref,hacker.displayName)
     return hacker.displayName;
   }
+
+  beforeUpdate(()=>{
+    if(isShowHacker) hacker = findHacker()
+  })
 </script>
 
 <tr>
@@ -48,7 +54,7 @@
     <td>
       <div class="onelineeven">
         <p class="mdc-typography--body2">
-          {findHacker()}
+          {hacker}
         </p>
       </div>
     </td>
