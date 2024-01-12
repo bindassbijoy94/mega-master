@@ -30,6 +30,7 @@
     display: flex;
     align-items: center;
     padding: 12px 16px;
+    margin-bottom: 4px;
   }
 
   .wrapped {
