@@ -70,7 +70,7 @@
         class="delete"
       >
         {#if isdeleting == false}
-          <button class="disable">Remove</button>
+          <button class="disable" disabled={user.isAdmin}>Remove</button>
         {:else}
           <span>deleting..</span>
         {/if}

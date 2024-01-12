@@ -17,6 +17,7 @@
         getDocs,
     } from "firebase/firestore";
     import Homepage from "./Homepage.svelte";
+    import { detailsShow } from "$lib/stores/states";
 
     let isLoaded = false;
 
@@ -55,6 +56,7 @@
                     );
                     if (isLoaded && sortedDocs.length >= $hacksList.length) {
                         playSound(audioUrl);
+                        if(!detailsShow) $detailsShow = true;
                     }
                     $hacksList = sortedDocs;
                     console.log("New Hack: ", change.doc.data());
@@ -67,7 +69,10 @@
 
                     $hacksList = [change.doc.data(), ...filteredItems];
                     console.log("Modified Hack: ", change.doc.data());
-                    if (isLoaded) {playSound(audioUrl)};
+                    if (isLoaded) {
+                        playSound(audioUrl)
+                        if(!detailsShow) $detailsShow = true;
+                    };
                 }
                 console.log("new list Hacks", $hacksList);
             });

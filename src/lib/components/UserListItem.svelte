@@ -2,24 +2,24 @@
     import { removeUser } from "$lib/users";
   import SingleUserItem from "./SingleUserItem.svelte";
   import CreateUser from "./CreateUser.svelte";
+    import { allUsersList } from "$lib/stores/user-store";
 
 
 
-  export let usersList;
 
   async function deleteUser(uid) {
     await removeUser(uid)
-    usersList=usersList.filter((u)=>u.uid!==uid)
+    $allUsersList=$allUsersList.filter((u)=>u.uid!==uid)
   }
   async function addUser(user) {
-    usersList=[...usersList,user]
+    $allUsersList=[...$allUsersList,user]
   }
 </script>
 
 <div class="parent">
   <CreateUser {addUser}/>
   <div class="demo-list" twoLine avatarList>
-    {#each usersList as user}
+    {#each $allUsersList as user}
       <SingleUserItem {user} {deleteUser}/>
     {/each}
   </div>

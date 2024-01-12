@@ -1,11 +1,11 @@
 <script>
     // import Userdata from "./Userdata.svelte";
 
-    import { allHacksList, user } from "$lib/stores/user-store.js";
+    import { allHacksList, user, allUsersList } from "$lib/stores/user-store.js";
     import { onMount } from "svelte";
     import { goto } from "$app/navigation";
     import { db } from "$lib/firebase";
-    import { logout } from "$lib/users";
+    import { getAllUsers, logout } from "$lib/users";
     import audioUrl from "$lib/resource/mixkit-sound.wav";
     import {
         collection,
@@ -25,12 +25,14 @@
         audio.play();
     }
 
+
     onMount(() => {
         var userStr = localStorage.getItem("user");
         if (!userStr) {
             goto("/login");
         } else {
             $user = JSON.parse(userStr);
+            getAllUsers().then((u) => ($allUsersList = u));
             loadAllHacks();
             setTimeout(() => {
                 isLoaded = true;
@@ -56,6 +58,7 @@
                         (a, b) => b.timestamp - a.timestamp,
                     );
                     if (isLoaded && sortedDocs.length >= $allHacksList.length) {
+                       
                         playSound(audioUrl);
                     }
                     $allHacksList = sortedDocs;
